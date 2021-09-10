@@ -1,0 +1,31 @@
+{
+  "name": "goldenmedia-backend",
+  "version": "1.0.0",
+  "description": "golden-media-backend",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.1.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.4",
+    "node-rsa": "^1.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "scripts": {
+    "test": "npm start",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "npm init"
+  },
+  "keywords": [
+    "goldeon-media-backend"
+  ],
+  "author": "Towhid-Tuliptech",
+  "license": "MIT"
+}
