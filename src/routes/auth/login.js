@@ -1,12 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const { Mongoose } = require("mongoose");
 const Signup = require("../../databse/auth/schema");
-const { decryption, encryption } = require("../../helper");
-
-
-
+const { decryption } = require("../../helper");
 
 
 router.post('/', async (req, res) => {

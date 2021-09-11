@@ -31,9 +31,6 @@ router.post('/', async (req, res) => {
             generateJwtAndSaveUsersData(usersData, res);
         }
     }
-
-
-  
 })
 
 module.exports = router;
