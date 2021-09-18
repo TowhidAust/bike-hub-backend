@@ -17,7 +17,7 @@ mongooseConnect().catch(err => console.log(err));
 /*mongodb connection ends here */
 
 
-app.use('/login', require('./src/routes/auth'))
+app.use('/login', require('./src/routes/auth')) // by default indicates index.js?
 app.use('/signup', require('./src/routes/auth/signup'))
 app.use('/customers', require('./src/routes/customers'))
 

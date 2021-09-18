@@ -7,8 +7,9 @@ const generateJwtAndSaveUsersData = async (usersData, res) => {
     const signup = new Signup(usersData);
     await signup.save();
     
-
+    console.log(signup);
     jwt.sign({usersData}, 'secretkey', (err, token)=>{
+
         return res.json({
             message: "user signup success",
             token: token

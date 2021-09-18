@@ -10,6 +10,7 @@ const { decryption, encryption } = require("../../helper");
 
 
 router.post('/', async (req, res) => {
+    var responseUer;
     const user = req.body;
     // query the whole users database
     const listOfUsers = await Signup.find({})
@@ -22,8 +23,14 @@ router.post('/', async (req, res) => {
 
         if((user.email === email) && (user.password === decryption(password))){
             isUserExists = "yes";
+            responseUer = listOfUsers[index];
+
+            console.log(responseUer);
+
         }
+
     }
+
 
     if(isUserExists === "yes"){
         jwt.sign({user}, 'secretkey', (err, token)=>{
@@ -31,8 +38,12 @@ router.post('/', async (req, res) => {
                  message: "user login success",
                  token: token,
                  data: [{
-                     username: user.username,
-                     email: user.email,
+                     username: responseUer.username,
+                     email: responseUer.email,
+                     phone: responseUer.phone,
+                     address: responseUer.address,
+                     role: responseUer.role,
+                     serialId: responseUer._id
                      
                  }]
              })
