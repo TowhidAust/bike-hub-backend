@@ -1,3 +1,6 @@
+// This page is equavalent to login.js
+
+
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");

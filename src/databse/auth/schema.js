@@ -35,26 +35,9 @@ const signupModel = new Schema({
 }, {timestamps: true})
 
 
-const productModel = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    }, 
-    img: {
-        data: Buffer,
-        contentType: String
-    }
-}, {timestamps: true})
+
 
 const Signup = mongoose.model('Users', signupModel);
-const Product = mongoose.model('Product', productModel);
 
-module.exports = {
-    
-    Signup,
-    Product
-}
+
+module.exports = Signup;
