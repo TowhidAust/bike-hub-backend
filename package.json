@@ -1,7 +1,7 @@
 {
   "name": "goldenmedia-backend",
   "version": "1.0.0",
-  "description": "golden-media-backend",
+  "description": "bike-hub-backend",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -24,8 +24,8 @@
     "url": "npm init"
   },
   "keywords": [
-    "goldeon-media-backend"
+    "bike-hub-backend"
   ],
-  "author": "Towhid-Tuliptech",
+  "author": "TowhidAust",
   "license": "MIT"
 }
