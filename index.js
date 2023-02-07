@@ -13,7 +13,7 @@ async function mongooseConnect() {
 mongoose.connection.on("connected", () => {
     console.log("mongodb connected successfully", DBURL);
 })
-mongooseConnect().catch(err => console.log(err));
+mongooseConnect().catch(err => console.log('Mongoose connection error', err));
 /*mongodb connection ends here */
 
 

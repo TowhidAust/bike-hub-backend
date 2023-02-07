@@ -3,7 +3,11 @@ const Schema = mongoose.Schema;
 
 const signupModel = new Schema(
   {
-    fullname: {
+    firstname: {
+      type: String,
+      required: true,
+    },
+    lastname: {
       type: String,
       required: true,
     },
@@ -15,6 +19,15 @@ const signupModel = new Schema(
       type: String,
       required: true,
     },
+    confirmPassword: {
+      type: String,
+      required: true,
+    },
+    role: {
+      // BUYER, SELLER, SUPER_ADMIN, REVIEWER
+      type: String,
+      required: true,
+    }
   },
   { timestamps: true }
 );
