@@ -24,7 +24,7 @@ const signupModel = new Schema(
       required: true,
     },
     role: {
-      // BUYER, SELLER, SUPER_ADMIN, REVIEWER
+      // BUYER, SELLER, SUPER_ADMIN, SHOP_ADMIN
       type: String,
       required: true,
     }

@@ -8,7 +8,7 @@ const { generateJwtAndSaveUsersData } = require("./controller");
 router.post("/", async (req, res) => {
   const usersData = req.body;
 
-  
+
   // password encryption
   const encryptedPass = encryption(usersData?.password);
   const encryptedConfirmPassword = encryption(usersData?.confirmPassword);

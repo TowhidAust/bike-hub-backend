@@ -2,42 +2,39 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const Signup = require("../../databse/auth/schema");
-const { decryption } = require("../../helper");
+const { decryption, generateResponse, encryption } = require("../../helper");
 
 
 router.post('/', async (req, res) => {
+    console.log('called login')
     const user = req.body;
+    const { phone, password } = req.body;
+    const encryptedPass = encryption(password)
+    console.log(encryptedPass);
     // query the whole users database
-    const listOfUsers = await Signup.find({})
-    
-
-    let isUserExists = "no";
-    for(const index in listOfUsers){
-        const email = listOfUsers[index].email;
-        const password = listOfUsers[index].password;
-
-        if((user.email === email) && (user.password === decryption(password))){
-            isUserExists = "yes";
+    Signup.findOne({ phone: phone }, (error, data) => {
+        if (error) {
+            res.status(500);
+            return res.json(500, error?.message);
         }
-    }
+        if (password === decryption(data?.password)) {
+            jwt.sign({ firstname: data?.firstname, lastname: data?.lastname, id: data?._id }, 'secretkey', (err, token) => {
+                if (err) {
+                    res.status(500);
+                    return res.json(generateResponse(500, 'Jwt error'));
+                }
+                res.status(200);
+                return res.json(generateResponse(200, 'Login success', null, { token: token }))
+            })
+        } else {
+            res.status(403);
+            res.json(generateResponse(403, 'Credentials are not valid'))
+        }
+    });
 
-    if(isUserExists === "yes"){
-        jwt.sign({user}, 'secretkey', (err, token)=>{
-            return res.json({
-                 message: "user login success",
-                 token: token,
-                 data: [{
-                     username: user.username,
-                     email: user.email,
-                     
-                 }]
-             })
-         })
-    }else{
-        return res.sendStatus(403)
-    }
 
-  
+
+
 })
 
 module.exports = router;
