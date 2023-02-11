@@ -19,7 +19,7 @@ const generateJwtAndSaveUsersData = async (usersData, res) => {
   delete usersData.confirmPassword;
 
   jwt.sign({ usersData }, "secretkey", (err, token) => {
-    if(err) {
+    if (err) {
       res.status(500);
       return res.json(generateResponse(500, 'Error generating Jwt token'))
     }
@@ -28,7 +28,7 @@ const generateJwtAndSaveUsersData = async (usersData, res) => {
       token: token,
     }));
   });
-  
+
 };
 
 module.exports = {

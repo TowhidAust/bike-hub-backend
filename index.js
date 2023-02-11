@@ -4,6 +4,9 @@ const port = 3000;
 app.use(express.json());
 const path = require('path');
 var cors = require('cors');
+const mongoose = require('mongoose');
+
+
 
 
 var allowlist = ['http://localhost:3005', 'http://example2.com']
@@ -22,28 +25,29 @@ app.use(cors(corsOptionsDelegate))
 /**
   *setup .env file paths for dev, staging, prod
 */
-if(process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   console.log('Running from development env');
-  require('dotenv').config({path: path.resolve(__dirname, '.env.development')});
-} else if(process.env.NODE_ENV === 'production') {
+  require('dotenv').config({ path: path.resolve(__dirname, '.env.development') });
+} else if (process.env.NODE_ENV === 'production') {
   console.log('Running from production env');
-  require('dotenv').config({path: path.resolve(__dirname, '.env.production')});
+  require('dotenv').config({ path: path.resolve(__dirname, '.env.production') });
 } else {
   require('dotenv').config();
 }
 
 /**
  * mongodb connection starts here 
-*/ 
+*/
 const DBURL = process.env.DB_CONNECTION_URL;
-const mongoose = require('mongoose');
 async function mongooseConnect() {
-    await mongoose.connect(DBURL);
+  await mongoose.connect(DBURL);
 }
 mongoose.connection.on("connected", () => {
-    console.log("mongodb connected successfully", DBURL);
+  console.log("mongodb connected successfully", DBURL);
 })
 mongooseConnect().catch(err => console.log('Mongoose connection error', err));
+
+
 
 
 /**

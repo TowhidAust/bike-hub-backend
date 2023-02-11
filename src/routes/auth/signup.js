@@ -3,10 +3,17 @@ const router = express.Router();
 const Signup = require("../../databse/auth/schema");
 const { encryption, generateResponse } = require("../../helper");
 const { generateJwtAndSaveUsersData } = require("./controller");
+const { validateSignupPayload } = require("./validation");
 
 // signup user account
 router.post("/", async (req, res) => {
-  const usersData = req.body;
+  const usersData = req?.body;
+  const { isValid, message, data } = validateSignupPayload(req?.body);
+
+  if (!isValid) {
+    res.status(403);
+    return res.json(generateResponse(403, message))
+  }
 
 
   // password encryption

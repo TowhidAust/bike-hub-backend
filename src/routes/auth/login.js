@@ -9,12 +9,11 @@ router.post('/', async (req, res) => {
     const { phone, password } = req.body;
     console.log(phone, password);
     Signup.findOne({ phone: phone }, (error, data) => {
-        console.log(error, data);
         if (error) {
             res.status(500);
-            return res.json(500, error?.message);
+            return res.json(generateResponse(500, error?.message));
         }
-   
+
         if (data && password === decryption(data?.password)) {
             jwt.sign({ firstname: data?.firstname, lastname: data?.lastname, id: data?._id }, 'secretkey', (err, token) => {
                 if (err) {
@@ -22,16 +21,16 @@ router.post('/', async (req, res) => {
                     return res.json(generateResponse(500, 'Jwt error'));
                 }
 
-                const userInfo = {id: data?._id, firstname: data?.firstname, lastname: data?.lastname, phone: data?.phone}
+                const userInfo = { id: data?._id, firstname: data?.firstname, lastname: data?.lastname, phone: data?.phone, role: data?.role }
                 res.status(200);
-                return res.json(generateResponse(200, 'Login success', userInfo, {token: token}))
+                return res.json(generateResponse(200, 'Login success', userInfo, { token: token }))
             })
         } else {
             res.status(403);
             res.json(generateResponse(403, 'Invalid credentials'))
         }
     });
-    
+
 })
 
 module.exports = router;
