@@ -8,6 +8,7 @@ const { validateSignupPayload } = require("./validation");
 // signup user account
 router.post("/", async (req, res) => {
   const usersData = req?.body;
+
   const { isValid, message, data } = validateSignupPayload(req?.body);
 
   if (!isValid) {

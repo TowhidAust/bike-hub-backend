@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
         }
 
         if (data && password === decryption(data?.password)) {
-            jwt.sign({ firstname: data?.firstname, lastname: data?.lastname, id: data?._id }, 'secretkey', (err, token) => {
+            jwt.sign({ _id: data?._id, firstname: data?.firstname, lastname: data?.lastname }, 'secretkey', (err, token) => {
                 if (err) {
                     res.status(500);
                     return res.json(generateResponse(500, 'Jwt error'));
