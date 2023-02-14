@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 
 
 
-var allowlist = ['http://localhost:3005', 'http://example2.com']
+var allowlist = ['http://localhost:3005', 'http://127.0.0.1:3005', 'http://example2.com']
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
