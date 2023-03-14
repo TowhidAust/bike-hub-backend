@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
   Signup.countDocuments({ phone: phone }, (err, count) => {
     if (err) {
       res.status(500);
-      return res.json(generateResponse(500, err.message))
+      return res.json(generateResponse(500, err?.message))
     }
     if (count > 0) {
       res.status(403);

@@ -3,11 +3,17 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const Signup = require("../../databse/auth/schema");
 const { decryption, generateResponse, encryption } = require("../../helper");
+const { validateLoginPayload } = require("./validation");
 
 
 router.post('/', async (req, res) => {
     const { phone, password } = req.body;
-    console.log(phone, password);
+    const { isValid, message } = validateLoginPayload(req?.body);
+    if (!isValid) {
+        res.status(403);
+        return res.json(generateResponse(403, message))
+    }
+
     Signup.findOne({ phone: phone }, (error, data) => {
         if (error) {
             res.status(500);

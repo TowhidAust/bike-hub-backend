@@ -1,6 +1,5 @@
 const Joi = require('joi');
 
-
 const validateSignupPayload = (payload) => {
     const schema = Joi.object({
         firstname: Joi.string().required(),
@@ -18,7 +17,7 @@ const validateSignupPayload = (payload) => {
     if (val?.error) {
         return {
             isValid: false,
-            message: val?.error?.details[0]?.message
+            message: val?.error?.details[0]?.message ?? 'Payload validation error'
         }
     }
 
@@ -29,6 +28,30 @@ const validateSignupPayload = (payload) => {
     }
 }
 
+const validateLoginPayload = (payload) => {
+    const schema = Joi.object({
+        phone: Joi.string().required(),
+        password: Joi.string().required()
+    });
+
+    const val = schema.validate(payload);
+
+    if (val?.error) {
+        return {
+            isValid: false,
+            message: val?.error?.details[0]?.message ?? 'Payload validation error'
+        }
+    }
+
+    return {
+        isValid: true,
+        message: 'Payload is valid',
+        data: val?.value,
+    }
+}
+
+
 module.exports = {
-    validateSignupPayload
+    validateSignupPayload,
+    validateLoginPayload
 }
