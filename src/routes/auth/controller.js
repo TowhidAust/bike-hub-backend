@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Signup = require("../../databse/auth/auth-schema");
 const { generateResponse } = require("../../helper");
+const { ENV_VARIABLES } = require("../../utils/constants");
 
 const generateJwtAndSaveUsersData = async (usersData, res) => {
 
@@ -20,7 +21,7 @@ const generateJwtAndSaveUsersData = async (usersData, res) => {
       createdAt: data?.createdAt
     }
 
-    jwt.sign({ dataWithoutPassword }, "secretkey", (err, token) => {
+    jwt.sign({ dataWithoutPassword }, ENV_VARIABLES.JWT_SECRET_KEY, (err, token) => {
       if (err) {
         res.status(500);
         return res.json(generateResponse(500, 'Error generating Jwt token'))

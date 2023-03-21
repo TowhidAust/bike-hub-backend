@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const Signup = require("../../databse/auth/auth-schema");
 const { decryption, generateResponse, encryption } = require("../../helper");
+const { ENV_VARIABLES } = require("../../utils/constants");
 const { validateLoginPayload } = require("./validation");
 
 
@@ -21,7 +22,7 @@ router.post('/', async (req, res) => {
         }
 
         if (data && password === decryption(data?.password)) {
-            jwt.sign({ _id: data?._id, firstname: data?.firstname, lastname: data?.lastname }, 'secretkey', (err, token) => {
+            jwt.sign({ _id: data?._id, firstname: data?.firstname, lastname: data?.lastname }, ENV_VARIABLES.JWT_SECRET_KEY, (err, token) => {
                 if (err) {
                     res.status(500);
                     return res.json(generateResponse(500, 'Jwt error'));
