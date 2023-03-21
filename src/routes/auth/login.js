@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const Signup = require("../../databse/auth/schema");
+const Signup = require("../../databse/auth/auth-schema");
 const { decryption, generateResponse, encryption } = require("../../helper");
 const { validateLoginPayload } = require("./validation");
 

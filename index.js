@@ -53,6 +53,10 @@ mongooseConnect().catch(err => console.log('Mongoose connection error', err));
 /**
  * Endpoints with specific routes
  */
+app.get('/', (req, res) => {
+  res.status(200);
+  return res.json({ message: 'Server is running successfully' })
+})
 app.use('/login', require('./src/routes/auth/login'))
 app.use('/signup', require('./src/routes/auth/signup'))
 app.use('/customers', require('./src/routes/customers'))

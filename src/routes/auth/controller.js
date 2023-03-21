@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Signup = require("../../databse/auth/schema");
+const Signup = require("../../databse/auth/auth-schema");
 const { generateResponse } = require("../../helper");
 
 const generateJwtAndSaveUsersData = async (usersData, res) => {

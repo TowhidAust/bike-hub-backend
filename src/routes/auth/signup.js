@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Signup = require("../../databse/auth/schema");
+const Signup = require("../../databse/auth/auth-schema");
 const { encryption, generateResponse } = require("../../helper");
 const { generateJwtAndSaveUsersData } = require("./controller");
 const { validateSignupPayload } = require("./validation");
