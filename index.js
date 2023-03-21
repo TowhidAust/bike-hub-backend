@@ -57,9 +57,10 @@ app.get('/', (req, res) => {
   res.status(200);
   return res.json({ message: 'Server is running successfully' })
 })
-app.use('/login', require('./src/routes/auth/login'))
-app.use('/signup', require('./src/routes/auth/signup'))
-app.use('/customers', require('./src/routes/customers'))
+app.use('/login', require('./src/routes/auth/login'));
+app.use('/signup', require('./src/routes/auth/signup'));
+app.use('/list-bike', require('./src/routes/list-bike/list-bike'));
+// app.use('/customers', require('./src/routes/customers'))
 
 app.listen(port, () => {
   console.log(`Bike-Hub is listening at http://localhost:${port}`)

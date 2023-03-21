@@ -6,6 +6,7 @@ const { ENV_VARIABLES } = require("../../utils/constants");
 const generateJwtAndSaveUsersData = async (usersData, res) => {
 
   // save into db in users collection
+  delete usersData.confirmPassword;
   const signup = new Signup(usersData);
 
   try {

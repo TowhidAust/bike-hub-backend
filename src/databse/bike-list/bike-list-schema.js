@@ -3,7 +3,15 @@ const Schema = mongoose.Schema;
 
 const bikeListModel = new Schema(
     {
+        userId: {
+            type: String,
+            required: true,
+        },
         title: {
+            type: String,
+            required: true,
+        },
+        imageUrl: {
             type: String,
             required: true,
         },
@@ -12,15 +20,15 @@ const bikeListModel = new Schema(
             required: true,
         },
         price: {
-            type: String,
+            type: Number,
             required: true,
         },
         publishYear: {
             type: String,
             required: true,
         },
-        kilometer: {
-            type: String,
+        kilometerRun: {
+            type: Number,
             required: true,
         },
         owner: {
@@ -51,7 +59,7 @@ const bikeListModel = new Schema(
             type: Boolean,
             required: true,
         },
-        review: {
+        isReviewed: {
             type: Boolean,
             required: true,
         },
@@ -76,6 +84,6 @@ const bikeListModel = new Schema(
     { timestamps: true }
 );
 
-const Signup = mongoose.model("BikeList", bikeListModel);
+const BikeListSchema = mongoose.model("bikeLists", bikeListModel, "bikeLists");
 
-module.exports = Signup;
+module.exports = BikeListSchema;

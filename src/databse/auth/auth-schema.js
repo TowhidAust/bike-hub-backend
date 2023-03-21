@@ -21,7 +21,6 @@ const signupModel = new Schema(
     },
     confirmPassword: {
       type: String,
-      required: true,
     },
     role: {
       // BUYER, SELLER, SUPER_ADMIN, SHOP_ADMIN
@@ -32,6 +31,6 @@ const signupModel = new Schema(
   { timestamps: true }
 );
 
-const Signup = mongoose.model("Users", signupModel);
+const Signup = mongoose.model("users", signupModel, "users");
 
 module.exports = Signup;
