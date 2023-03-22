@@ -84,6 +84,6 @@ const bikeListModel = new Schema(
     { timestamps: true }
 );
 
-const BikeListSchema = mongoose.model("bikeLists", bikeListModel, "bikeLists");
+const BikeListSchema = mongoose.model("bikelists", bikeListModel);
 
 module.exports = BikeListSchema;
