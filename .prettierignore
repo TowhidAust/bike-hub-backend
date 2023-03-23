@@ -1,0 +1,15 @@
+# Ignore artifacts:
+build
+coverage
+package.json
+tsconfig.json
+tslint.json
+tsconfig.*.json
+package-lock.json
+package.json
+yarn-lock.json
+build
+node_modules
+public
+.vscode
+.eslinrc.js

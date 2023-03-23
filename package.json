@@ -16,12 +16,20 @@
     "node-rsa": "^1.1.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "eslint": "^8.36.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "nodemon": "^2.0.12",
+    "prettier": "2.8.6"
   },
   "scripts": {
     "test": "npm start",
     "start": "set NODE_ENV=development&&nodemon index.js",
-    "start:prod": "set NODE_ENV=production&&nodemon index.js"
+    "start:prod": "set NODE_ENV=production&&nodemon index.js",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "repository": {
     "type": "git",

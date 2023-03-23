@@ -1,68 +1,12 @@
-const Joi = require("joi");
-// title
-// currentPrice
-// cc
-// bikeType
-// publishYear
-// brand
-// madeIn
-// assembleIn
-// distributor
-// engineType
-// maximumPower
-// fuelSupply
-// engineCooling
-// displacement
-// maximumTorque
-// valves
-// noOfCylinders
-// startingMethod
-// transmissionType
-// noOfGears
-// clutchType
-// milage
-// topSpeed
-// chassisType
-// rearSuspension
-// frontSuspension
-// frontBrakeType
-// frontBrakeDiameter
-// rearBrakeType
-// rearBrakeDiameter
-// antiLockBraking
-// frontTireSize
-// rearTireSize
-// wheelType
-// tireType
-// overallLength
-// height
-// weight
-// wheelbase
-// overallWidth
-// groundClearence
-// fuelTankCapacity
-// seatHeight
-// batteryType
-// batteryVoltage
-// headLight
-// tailLight
-// indicators
-// speedometer
-// rpmMeter
-// seatType
-// odometer
-// handleType
-// isPassengerGrabRail
-// isEngineKillSwitch
-// imageUrl
-// description
+const Joi = require('joi');
 const validateAddConstantBikePayload = (payload) => {
     const schema = Joi.object({
+        bikeCode: Joi.number().required(),
         title: Joi.string().required(),
-        currentPrice: Joi.string().required(),
-        cc: Joi.string().required(),
-        bikeType: Joi.string().required(),
-        publishYear: Joi.string().required(),
+        currentPrice: Joi.number().required(),
+        cc: Joi.number().required(),
+        bikeType: Joi.string().valid('SPORTS', 'COMMUTER').required(),
+        publishYear: Joi.number().required(),
         brand: Joi.string().required(),
         madeIn: Joi.string().required(),
         assembleIn: Joi.string().required(),
@@ -70,65 +14,75 @@ const validateAddConstantBikePayload = (payload) => {
         engineType: Joi.string().required(),
         maximumPower: Joi.string().required(),
         fuelSupply: Joi.string().required(),
-        engineCooling: Joi.string().required(),
+        engineCooling: Joi.string()
+            .valid('LIQUID_COOL', 'WATER_COOL', 'AIR_COOL')
+            .required(),
         displacement: Joi.string().required(),
         maximumTorque: Joi.string().required(),
-        valves: Joi.string().required(),
-        noOfCylinders: Joi.string().required(),
-        startingMethod: Joi.string().required(),
-        transmissionType: Joi.string().required(),
-        noOfGears: Joi.string().required(),
+        valves: Joi.number().required(),
+        noOfCylinders: Joi.number().required(),
+        startingMethod: Joi.string()
+            .valid('ELECTRIC', 'KICK', 'ELECTRIC_AND_KICK')
+            .required(),
+        transmissionType: Joi.string().valid('MANUAL', 'AUTO').required(),
+        noOfGears: Joi.number().required(),
         clutchType: Joi.string().required(),
-        milage: Joi.string().required(),
-        topSpeed: Joi.string().required(),
+        milage: Joi.number().required(),
+        topSpeed: Joi.number().required(),
         chassisType: Joi.string().required(),
-        rearSuspension: Joi.string().required(),
         frontSuspension: Joi.string().required(),
+        rearSuspension: Joi.string().required(),
         frontBrakeType: Joi.string().required(),
-        frontBrakeDiameter: Joi.string().required(),
+        frontBrakeDiameter: Joi.number().required(),
         rearBrakeType: Joi.string().required(),
-        rearBrakeDiameter: Joi.string().required(),
+        rearBrakeDiameter: Joi.number().required(),
         antiLockBraking: Joi.string().required(),
         frontTireSize: Joi.string().required(),
         rearTireSize: Joi.string().required(),
         wheelType: Joi.string().required(),
-        tireType: Joi.string().required(),
-        overallLength: Joi.string().required(),
-        height: Joi.string().required(),
-        weight: Joi.string().required(),
-        wheelbase: Joi.string().required(),
-        overallWidth: Joi.string().required(),
-        groundClearence: Joi.string().required(),
-        fuelTankCapacity: Joi.string().required(),
-        seatHeight: Joi.string().required(),
+        tireType: Joi.string().valid('TUBELESS', 'TUBE').required(),
+        overallLength: Joi.number().required(),
+        height: Joi.number().required(),
+        weight: Joi.number().required(),
+        wheelbase: Joi.number().required(),
+        overallWidth: Joi.number().required(),
+        groundClearence: Joi.number().required(),
+        fuelTankCapacity: Joi.number().required(),
+        seatHeight: Joi.number().required(),
         batteryType: Joi.string().required(),
         batteryVoltage: Joi.string().required(),
         headLight: Joi.string().required(),
         tailLight: Joi.string().required(),
         indicators: Joi.string().required(),
-        speedometer: Joi.string().required(),
-        rpmMeter: Joi.string().required(),
         seatType: Joi.string().required(),
-        odometer: Joi.string().required(),
+        speedometer: Joi.string().valid('DIGITAL', 'ANALOG').required(),
+        odometer: Joi.string().valid('DIGITAL', 'ANALOG').required(),
+        rpmMeter: Joi.string().valid('DIGITAL', 'ANALOG').required(),
         handleType: Joi.string().required(),
-        isPassengerGrabRail: Joi.string().required(),
-        isEngineKillSwitch: Joi.string().required(),
+        isPassengerGrabRail: Joi.boolean().required(),
+        isEngineKillSwitch: Joi.boolean().required(),
         imageUrl: Joi.string().required(),
         description: Joi.string().required(),
     }).with('password', 'confirmPassword');
 
-    const val = schema.validate(payload);
+    const val = schema.validate(payload, { abortEarly: false });
 
     if (val?.error) {
         return {
             isValid: false,
-            message: val?.error?.details[0]?.message ?? 'Payload validation error'
-        }
+            message:
+                val?.error?.details[0]?.message ?? 'Payload validation error',
+            details: val?.error,
+        };
     }
 
     return {
         isValid: true,
         message: 'Payload is valid',
         data: val?.value,
-    }
-}
+    };
+};
+
+module.exports = {
+    validateAddConstantBikePayload,
+};

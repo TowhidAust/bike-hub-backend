@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const bikeListModel = new Schema(
@@ -79,11 +79,10 @@ const bikeListModel = new Schema(
             type: String,
             required: true,
         },
-
     },
     { timestamps: true }
 );
 
-const BikeListSchema = mongoose.model("bikelists", bikeListModel);
+const BikeListSchema = mongoose.model('bikelists', bikeListModel);
 
 module.exports = BikeListSchema;

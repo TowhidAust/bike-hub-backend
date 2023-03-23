@@ -1,8 +1,12 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const constantBikesModel = new Schema(
     {
+        bikeCode: {
+            type: Number,
+            required: true,
+        },
         title: {
             type: String,
             required: true,
@@ -12,7 +16,7 @@ const constantBikesModel = new Schema(
             required: true,
         },
         cc: {
-            type: String,
+            type: Number,
             required: true,
         },
         bikeType: {
@@ -20,7 +24,7 @@ const constantBikesModel = new Schema(
             required: true,
         },
         publishYear: {
-            type: String,
+            type: Number,
             required: true,
         },
         brand: {
@@ -64,11 +68,11 @@ const constantBikesModel = new Schema(
             required: true,
         },
         valves: {
-            type: String,
+            type: Number,
             required: true,
         },
         noOfCylinders: {
-            type: String,
+            type: Number,
             required: true,
         },
         startingMethod: {
@@ -80,7 +84,7 @@ const constantBikesModel = new Schema(
             required: true,
         },
         noOfGears: {
-            type: String,
+            type: Number,
             required: true,
         },
         clutchType: {
@@ -88,11 +92,11 @@ const constantBikesModel = new Schema(
             required: true,
         },
         milage: {
-            type: String,
+            type: Number,
             required: true,
         },
         topSpeed: {
-            type: String,
+            type: Number,
             required: true,
         },
         chassisType: {
@@ -112,7 +116,7 @@ const constantBikesModel = new Schema(
             required: true,
         },
         frontBrakeDiameter: {
-            type: String,
+            type: Number,
             required: true,
         },
         rearBrakeType: {
@@ -120,7 +124,7 @@ const constantBikesModel = new Schema(
             required: true,
         },
         rearBrakeDiameter: {
-            type: String,
+            type: Number,
             required: true,
         },
         antiLockBraking: {
@@ -144,35 +148,35 @@ const constantBikesModel = new Schema(
             required: true,
         },
         overallLength: {
-            type: String,
+            type: Number,
             required: true,
         },
         height: {
-            type: String,
+            type: Number,
             required: true,
         },
         weight: {
-            type: String,
+            type: Number,
             required: true,
         },
         wheelbase: {
-            type: String,
+            type: Number,
             required: true,
         },
         overallWidth: {
-            type: String,
+            type: Number,
             required: true,
         },
         groundClearence: {
-            type: String,
+            type: Number,
             required: true,
         },
         fuelTankCapacity: {
-            type: String,
+            type: Number,
             required: true,
         },
         seatHeight: {
-            type: String,
+            type: Number,
             required: true,
         },
         batteryType: {
@@ -235,6 +239,6 @@ const constantBikesModel = new Schema(
     { timestamps: true }
 );
 
-const ConstantBikeSchema = mongoose.model("constantbikes", constantBikesModel);
+const ConstantBikeSchema = mongoose.model('constantbikes', constantBikesModel);
 
 module.exports = ConstantBikeSchema;
