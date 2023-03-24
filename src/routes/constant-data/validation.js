@@ -5,7 +5,9 @@ const validateAddConstantBikePayload = (payload) => {
         title: Joi.string().required(),
         currentPrice: Joi.number().required(),
         cc: Joi.number().required(),
-        bikeType: Joi.string().valid('SPORTS', 'COMMUTER').required(),
+        bikeType: Joi.string()
+            .valid('SPORTS', 'COMMUTER', 'STANDARD')
+            .required(),
         publishYear: Joi.number().required(),
         brand: Joi.string().required(),
         madeIn: Joi.string().required(),

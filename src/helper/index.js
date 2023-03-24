@@ -1,4 +1,6 @@
-var CryptoJS = require('crypto-js');
+const CryptoJS = require('crypto-js');
+const jwt = require('jsonwebtoken');
+const { ENV_VARIABLES } = require('../utils/constants');
 
 const encryption = (message) => {
     // const x = 7;
@@ -10,7 +12,6 @@ const decryption = (encrypted) => {
     var originalText = bytes.toString(CryptoJS.enc.Utf8);
     return originalText;
 };
-
 const generateResponse = (status, message, result, extraJson) => {
     if (result) {
         return {
@@ -27,9 +28,25 @@ const generateResponse = (status, message, result, extraJson) => {
         ...extraJson,
     };
 };
-
+const verifyJwt = async (token) => {
+    try {
+        const usersData = await jwt.verify(token, ENV_VARIABLES.JWT_SECRET_KEY);
+        return usersData;
+    } catch (error) {
+        if (error) {
+            return false;
+        }
+    }
+};
+const promiseHandler = (promise) => {
+    return promise
+        .then((data) => [data, undefined])
+        .catch((error) => Promise.resolve([undefined, error]));
+};
 module.exports = {
     encryption,
     decryption,
     generateResponse,
+    verifyJwt,
+    promiseHandler,
 };
