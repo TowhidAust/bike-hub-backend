@@ -1,7 +1,7 @@
 var CryptoJS = require('crypto-js');
 
 const encryption = (message) => {
-    const x = 7;
+    // const x = 7;
     var ciphertext = CryptoJS.AES.encrypt(message, 'secret').toString();
     return ciphertext;
 };
