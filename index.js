@@ -63,6 +63,7 @@ app.get('/', (req, res) => {
 });
 app.use('/login', require('./src/routes/auth/login'));
 app.use('/signup', require('./src/routes/auth/signup'));
+app.use('/refresh-token', require('./src/routes/auth/refresh-token'));
 app.use('/list-bike', require('./src/routes/list-bike/list-bike'));
 app.use(
     '/add-constant-bike',

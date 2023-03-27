@@ -23,9 +23,9 @@ router.post('/', verifyToken, async (req, res) => {
     const { isValid, details } = validateAddConstantBikePayload(bodyJson);
 
     if (!isValid) {
-        res.status(400);
+        res.status(401);
         return res.json(
-            generateResponse(400, 'Payload is not valid', undefined, {
+            generateResponse(401, 'Payload is not valid', undefined, {
                 details: {
                     type: 'FIELD_ERROR',
                     details,
@@ -38,7 +38,7 @@ router.post('/', verifyToken, async (req, res) => {
     const jwtUserData = await verifyJwt(req?.token);
     if (!jwtUserData) {
         res.status(401);
-        return res.json(generateResponse(401, 'Unauthorized user'));
+        return res.json(generateResponse(403, 'Unauthorized user'));
     }
 
     // 3. check the last inserted documents bikeId and suggest user to insert a valid bike id by incrementing 1

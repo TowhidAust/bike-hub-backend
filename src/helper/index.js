@@ -30,7 +30,10 @@ const generateResponse = (status, message, result, extraJson) => {
 };
 const verifyJwt = async (token) => {
     try {
-        const usersData = await jwt.verify(token, ENV_VARIABLES.JWT_SECRET_KEY);
+        const usersData = await jwt.verify(
+            token,
+            ENV_VARIABLES.ACCESS_TOKEN_SECRET
+        );
         return usersData;
     } catch (error) {
         if (error) {

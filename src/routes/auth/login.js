@@ -10,8 +10,8 @@ router.post('/', async (req, res) => {
     const { phone, password } = req.body;
     const { isValid, message } = validateLoginPayload(req?.body);
     if (!isValid) {
-        res.status(403);
-        return res.json(generateResponse(403, message));
+        res.status(400);
+        return res.json(generateResponse(400, message));
     }
 
     Signup.findOne({ phone: phone }, (error, data) => {
@@ -21,19 +21,30 @@ router.post('/', async (req, res) => {
         }
 
         if (data && password === decryption(data?.password)) {
-            jwt.sign(
-                {
-                    _id: data?._id,
-                    firstname: data?.firstname,
-                    lastname: data?.lastname,
-                },
-                ENV_VARIABLES.JWT_SECRET_KEY,
-                (err, token) => {
-                    if (err) {
-                        res.status(500);
-                        return res.json(generateResponse(500, 'Jwt error'));
-                    }
+            try {
+                //creating a access token
+                const accessToken = jwt.sign(
+                    {
+                        _id: data?._id,
+                        firstname: data?.firstname,
+                        lastname: data?.lastname,
+                    },
+                    ENV_VARIABLES.ACCESS_TOKEN_SECRET,
+                    { expiresIn: ENV_VARIABLES.ACCESS_TOKEN_VALIDITY }
+                );
 
+                // creating refresh token
+                const refreshToken = jwt.sign(
+                    {
+                        _id: data?._id,
+                        firstname: data?.firstname,
+                        lastname: data?.lastname,
+                    },
+                    ENV_VARIABLES.REFRESH_TOKEN_SECRET,
+                    { expiresIn: ENV_VARIABLES.REFRESH_TOKEN_VALIDITY }
+                );
+
+                if (accessToken && refreshToken) {
                     const userInfo = {
                         id: data?._id,
                         firstname: data?.firstname,
@@ -44,11 +55,17 @@ router.post('/', async (req, res) => {
                     res.status(200);
                     return res.json(
                         generateResponse(200, 'Login success', userInfo, {
-                            token: token,
+                            accessToken: accessToken,
+                            refreshToken: refreshToken,
                         })
                     );
                 }
-            );
+            } catch (error) {
+                res.status(500);
+                return res.json(
+                    generateResponse(500, error?.message ?? 'Jwt error')
+                );
+            }
         } else {
             res.status(403);
             res.json(generateResponse(403, 'Invalid credentials'));
