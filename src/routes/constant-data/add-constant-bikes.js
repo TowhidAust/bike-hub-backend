@@ -36,6 +36,7 @@ router.post('/', verifyToken, async (req, res) => {
 
     // 2. validate with jwt token
     const jwtUserData = await verifyJwt(req?.token);
+
     if (!jwtUserData) {
         res.status(401);
         return res.json(generateResponse(401, 'Unauthorized user'));

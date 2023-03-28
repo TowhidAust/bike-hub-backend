@@ -17,8 +17,8 @@ const generateResponse = (status, message, result, extraJson) => {
         return {
             status: status || null,
             message: message || null,
-            result: result || null,
             ...extraJson,
+            result: result || null,
         };
     }
 

@@ -1,120 +1,46 @@
 const express = require('express');
-const Signup = require('../../databse/auth/auth-schema');
 const ConstantBikeSchema = require('../../databse/constant-data/add-constant-bikes-schema');
-const { generateResponse, verifyJwt, promiseHandler } = require('../../helper');
+const { promiseHandler, generateResponse } = require('../../helper');
 const { verifyToken } = require('../../middleware');
-const { validateAddConstantBikePayload } = require('./validation');
 const router = express.Router();
 
-/**
- * 1. validate body json with proper format
- * 2. validate with jwt token
- * 3. check the last inserted documents bikeId
- *  and suggest user to insert a valid bike id by incrementing 1
- * 4. check if the user is admin or not
- * 5. check the bike is exists or not
- * 6. finally add the bike in the db list
- */
+router.get('/', verifyToken, async (req, res) => {
+    const queryParams = req.query;
+    const page = parseInt(queryParams?.page) || 0;
+    const pageSize = parseInt(queryParams?.pageSize) || 0;
 
-router.post('/', verifyToken, async (req, res) => {
-    const bodyJson = req?.body;
-
-    // 1. validate body json with proper format
-    const { isValid, details } = validateAddConstantBikePayload(bodyJson);
-
-    if (!isValid) {
-        res.status(401);
-        return res.json(
-            generateResponse(401, 'Payload is not valid', undefined, {
-                details: {
-                    type: 'FIELD_ERROR',
-                    details,
-                },
-            })
-        );
-    }
-
-    // 2. validate with jwt token
-    const jwtUserData = await verifyJwt(req?.token);
-    if (!jwtUserData) {
-        res.status(401);
-        return res.json(generateResponse(403, 'Unauthorized user'));
-    }
-
-    // 3. check the last inserted documents bikeId and suggest user to insert a valid bike id by incrementing 1
-    const [lastInsertedDocument, lastInsertedDocumentErr] =
-        await promiseHandler(
-            ConstantBikeSchema.find({}).sort({ _id: -1 }).limit(1)
-        );
-
-    if (lastInsertedDocumentErr) {
-        res.status(500);
-        return res.json(
-            generateResponse(500, lastInsertedDocumentErr?.message)
-        );
-    }
-
-    if (bodyJson?.bikeCode !== lastInsertedDocument[0]?.bikeCode + 1) {
-        res.status(409);
-        return res.json(
-            generateResponse(
-                409,
-                `Your bike code should be ${
-                    lastInsertedDocument[0].bikeCode + 1
-                }`
-            )
-        );
-    }
-
-    // 4. check if the user is admin or not
-    const [userData, userDataErr] = await promiseHandler(
-        Signup.findById(jwtUserData?._id)
-    );
-    if (!userData?.role?.includes('SUPER_ADMIN')) {
-        res.status(403);
-        return res.json(generateResponse(403, 'Unauthorized user'));
-    }
-    if (userDataErr) {
-        res.status(500);
-        return res.json(
-            generateResponse(
-                500,
-                userDataErr?.message ?? 'User not found in db'
-            )
-        );
-    }
-    // 5. check the bike is exists or not
     const [count, countErr] = await promiseHandler(
-        ConstantBikeSchema.countDocuments({
-            bikeCode: bodyJson?.bikeCode,
-        })
+        ConstantBikeSchema.countDocuments()
     );
 
     if (countErr) {
-        res.status(500);
-        return res.json(generateResponse(500, countErr?.message));
+        return res.status(500, countErr?.message ?? 'Internal server error');
     }
 
-    if (count > 0) {
-        res.status(409);
-        return res.json(generateResponse(409, 'This bike is already listed'));
-    }
-
-    // 6. finally add the bike in the db list
-    const newConstantBikeList = new ConstantBikeSchema(bodyJson);
-    const [savedData, savedDataErr] = await promiseHandler(
-        newConstantBikeList.save()
+    const [constantBikesData, constantBikeDataErr] = await promiseHandler(
+        ConstantBikeSchema.find()
+            .skip(page * pageSize)
+            .limit(pageSize)
     );
-
-    if (savedDataErr) {
-        res.status(500);
-        return res.json(generateResponse(500, countErr?.message));
+    if (constantBikeDataErr) {
+        return res.status(
+            500,
+            constantBikeDataErr?.message ?? 'Internal server error'
+        );
     }
 
-    if (savedData) {
-        res.status(200);
-        return res.json(
-            generateResponse(200, 'Bike listed successfully', savedData)
+    if (constantBikesData && count) {
+        return res.status(200).json(
+            generateResponse(
+                200,
+                'Get constant bike sucess',
+                constantBikesData,
+                {
+                    totalCount: count,
+                    page: page,
+                    pageSize: pageSize,
+                }
+            )
         );
     }
 });

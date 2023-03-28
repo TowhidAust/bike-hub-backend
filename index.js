@@ -69,6 +69,10 @@ app.use(
     '/add-constant-bike',
     require('./src/routes/constant-data/add-constant-bikes')
 );
+app.use(
+    '/get-constant-bikes',
+    require('./src/routes/constant-data/get-constant-bikes')
+);
 // app.use('/customers', require('./src/routes/customers'))
 
 app.listen(port, () => {
