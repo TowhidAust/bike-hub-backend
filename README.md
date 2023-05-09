@@ -1,3 +1,5 @@
-# goldenmedia-backend
+# bikehub-backend
 
-This is backend Repository for golden media project.
+This is backend Repository for bikehub backend project.
+yarn
+yarn start
