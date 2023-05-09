@@ -6,6 +6,14 @@ const ENV_VARIABLES = {
     REFRESH_TOKEN_VALIDITY: process.env.REFRESH_TOKEN_VALIDITY,
 };
 
+const USER_ROLES = {
+    SUPER_ADMIN: 'SUPER_ADMIN',
+    BUYER: 'BUYER',
+    SELLER: 'SELLER',
+    INDIVIDUAL_SELLER: 'INDIVIDUAL_SELLER',
+};
+
 module.exports = {
     ENV_VARIABLES,
+    USER_ROLES,
 };

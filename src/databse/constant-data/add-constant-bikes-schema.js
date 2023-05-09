@@ -68,11 +68,11 @@ const constantBikesModel = new Schema(
             required: true,
         },
         valves: {
-            type: Number,
+            type: String,
             required: true,
         },
         noOfCylinders: {
-            type: Number,
+            type: String,
             required: true,
         },
         startingMethod: {
@@ -92,11 +92,11 @@ const constantBikesModel = new Schema(
             required: true,
         },
         milage: {
-            type: Number,
+            type: String,
             required: true,
         },
         topSpeed: {
-            type: Number,
+            type: String,
             required: true,
         },
         chassisType: {
@@ -116,7 +116,7 @@ const constantBikesModel = new Schema(
             required: true,
         },
         frontBrakeDiameter: {
-            type: Number,
+            type: String,
             required: true,
         },
         rearBrakeType: {
@@ -124,7 +124,7 @@ const constantBikesModel = new Schema(
             required: true,
         },
         rearBrakeDiameter: {
-            type: Number,
+            type: String,
             required: true,
         },
         antiLockBraking: {
@@ -148,35 +148,35 @@ const constantBikesModel = new Schema(
             required: true,
         },
         overallLength: {
-            type: Number,
+            type: String,
             required: true,
         },
         height: {
-            type: Number,
+            type: String,
             required: true,
         },
         weight: {
-            type: Number,
+            type: String,
             required: true,
         },
         wheelbase: {
-            type: Number,
+            type: String,
             required: true,
         },
         overallWidth: {
-            type: Number,
+            type: String,
             required: true,
         },
         groundClearence: {
-            type: Number,
+            type: String,
             required: true,
         },
         fuelTankCapacity: {
-            type: Number,
+            type: String,
             required: true,
         },
         seatHeight: {
-            type: Number,
+            type: String,
             required: true,
         },
         batteryType: {

@@ -4,22 +4,30 @@ const ConstantBikeSchema = require('../../databse/constant-data/add-constant-bik
 const { generateResponse, verifyJwt, promiseHandler } = require('../../helper');
 const { verifyToken } = require('../../middleware');
 const { validateAddConstantBikePayload } = require('./validation');
+const { USER_ROLES } = require('../../utils/constants');
 const router = express.Router();
 
 /**
- * 1. validate body json with proper format
- * 2. validate with jwt token
+ * 1. validate with jwt token
+ * 2. validate body json with proper format
  * 3. check the last inserted documents bikeId
  *  and suggest user to insert a valid bike id by incrementing 1
- * 4. check if the user is admin or not
+ * 4. check if the user is a super admin or not
  * 5. check the bike is exists or not
  * 6. finally add the bike in the db list
  */
 
 router.post('/', verifyToken, async (req, res) => {
     const bodyJson = req?.body;
+    // 1. validate with jwt token
+    const jwtUserData = await verifyJwt(req?.token);
 
-    // 1. validate body json with proper format
+    if (!jwtUserData) {
+        res.status(401);
+        return res.json(generateResponse(401, 'Unauthorized user'));
+    }
+
+    // 2. validate body json with proper format
     const { isValid, details } = validateAddConstantBikePayload(bodyJson);
 
     if (!isValid) {
@@ -32,14 +40,6 @@ router.post('/', verifyToken, async (req, res) => {
                 },
             })
         );
-    }
-
-    // 2. validate with jwt token
-    const jwtUserData = await verifyJwt(req?.token);
-
-    if (!jwtUserData) {
-        res.status(401);
-        return res.json(generateResponse(401, 'Unauthorized user'));
     }
 
     // 3. check the last inserted documents bikeId and suggest user to insert a valid bike id by incrementing 1
@@ -55,23 +55,26 @@ router.post('/', verifyToken, async (req, res) => {
         );
     }
 
-    if (bodyJson?.bikeCode !== lastInsertedDocument[0]?.bikeCode + 1) {
+    if (
+        lastInsertedDocument.length > 0 &&
+        bodyJson?.bikeCode !== lastInsertedDocument[0]?.bikeCode + 1
+    ) {
         res.status(409);
         return res.json(
             generateResponse(
                 409,
                 `Your bike code should be ${
-                    lastInsertedDocument[0].bikeCode + 1
+                    lastInsertedDocument[0]?.bikeCode + 1
                 }`
             )
         );
     }
 
-    // 4. check if the user is admin or not
+    // 4. check if the user is a super admin or not
     const [userData, userDataErr] = await promiseHandler(
         Signup.findById(jwtUserData?._id)
     );
-    if (!userData?.role?.includes('SUPER_ADMIN')) {
+    if (!userData?.role?.includes(USER_ROLES.SUPER_ADMIN)) {
         res.status(403);
         return res.json(generateResponse(403, 'Unauthorized user'));
     }
@@ -93,7 +96,9 @@ router.post('/', verifyToken, async (req, res) => {
 
     if (countErr) {
         res.status(500);
-        return res.json(generateResponse(500, countErr?.message));
+        return res.json(
+            generateResponse(500, countErr?.message || 'Error finding bike')
+        );
     }
 
     if (count > 0) {
@@ -106,10 +111,14 @@ router.post('/', verifyToken, async (req, res) => {
     const [savedData, savedDataErr] = await promiseHandler(
         newConstantBikeList.save()
     );
-
     if (savedDataErr) {
         res.status(500);
-        return res.json(generateResponse(500, countErr?.message));
+        return res.json(
+            generateResponse(
+                500,
+                savedDataErr?.message || 'Error Saving into database'
+            )
+        );
     }
 
     if (savedData) {
