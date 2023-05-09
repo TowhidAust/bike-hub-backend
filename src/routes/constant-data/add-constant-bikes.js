@@ -8,7 +8,7 @@ const { USER_ROLES } = require('../../utils/constants');
 const router = express.Router();
 
 /**
- * 1. validate with jwt token
+ * 1. validate with jwt token firsr
  * 2. validate body json with proper format
  * 3. check the last inserted documents bikeId
  *  and suggest user to insert a valid bike id by incrementing 1
