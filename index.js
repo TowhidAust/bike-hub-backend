@@ -8,19 +8,19 @@ var cors = require('cors');
 const mongoose = require('mongoose');
 
 var allowlist = [
-    'http://localhost:3005',
-    'http://127.0.0.1:3005',
-    'http://example2.com',
-    'https://towhidaust-bikehub.netlify.app',
+	'http://localhost:3005',
+	'http://127.0.0.1:3005',
+	'http://example2.com',
+	'https://towhidaust-bikehub.netlify.app',
 ];
 var corsOptionsDelegate = function (req, callback) {
-    var corsOptions;
-    if (allowlist.indexOf(req.header('Origin')) !== -1) {
-        corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
-    } else {
-        corsOptions = { origin: false }; // disable CORS for this request
-    }
-    callback(null, corsOptions); // callback expects two parameters: error and options
+	var corsOptions;
+	if (allowlist.indexOf(req.header('Origin')) !== -1) {
+		corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+	} else {
+		corsOptions = { origin: false }; // disable CORS for this request
+	}
+	callback(null, corsOptions); // callback expects two parameters: error and options
 };
 
 app.use(cors(corsOptionsDelegate));
@@ -29,17 +29,17 @@ app.use(cors(corsOptionsDelegate));
  *setup .env file paths for dev, staging, prod
  */
 if (process.env.NODE_ENV === 'development') {
-    console.log('Running from development env');
-    require('dotenv').config({
-        path: path.resolve(__dirname, '.env.development'),
-    });
+	console.log('Running from development env');
+	require('dotenv').config({
+		path: path.resolve(__dirname, '.env.development'),
+	});
 } else if (process.env.NODE_ENV === 'production') {
-    console.log('Running from production env');
-    require('dotenv').config({
-        path: path.resolve(__dirname, '.env.production'),
-    });
+	console.log('Running from production env');
+	require('dotenv').config({
+		path: path.resolve(__dirname, '.env.production'),
+	});
 } else {
-    require('dotenv').config();
+	require('dotenv').config();
 }
 
 /**
@@ -47,10 +47,10 @@ if (process.env.NODE_ENV === 'development') {
  */
 const DBURL = process.env.DB_CONNECTION_URL;
 async function mongooseConnect() {
-    await mongoose.connect(DBURL);
+	await mongoose.connect(DBURL);
 }
 mongoose.connection.on('connected', () => {
-    console.log('mongodb connected successfully', DBURL);
+	console.log('mongodb connected successfully', DBURL);
 });
 mongooseConnect().catch((err) => console.log('Mongoose connection error', err));
 
@@ -58,23 +58,23 @@ mongooseConnect().catch((err) => console.log('Mongoose connection error', err));
  * Endpoints with specific routes
  */
 app.get('/', (req, res) => {
-    res.status(200);
-    return res.json({ message: 'Server is running successfully' });
+	res.status(200);
+	return res.json({ message: 'Server is running successfully' });
 });
 app.use('/login', require('./src/routes/auth/login'));
 app.use('/signup', require('./src/routes/auth/signup'));
 app.use('/refresh-token', require('./src/routes/auth/refresh-token'));
 app.use('/list-bike', require('./src/routes/list-bike/list-bike'));
 app.use(
-    '/add-constant-bike',
-    require('./src/routes/constant-data/add-constant-bikes')
+	'/add-constant-bike',
+	require('./src/routes/constant-data/add-constant-bikes')
 );
 app.use(
-    '/get-constant-bikes',
-    require('./src/routes/constant-data/get-constant-bikes')
+	'/get-constant-bikes',
+	require('./src/routes/constant-data/get-constant-bikes')
 );
 // app.use('/customers', require('./src/routes/customers'))
 
 app.listen(port, () => {
-    console.log(`Bike-Hub is listening at http://localhost:${port}`);
+	console.log(`Bike-Hub is listening at http://localhost:${port}`);
 });
