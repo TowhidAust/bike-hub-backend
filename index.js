@@ -6,6 +6,7 @@ app.use(express.json());
 const path = require('path');
 var cors = require('cors');
 const mongoose = require('mongoose');
+const { errorLogger, errorResponder, invalidPathHandler } = require('./src/middleware/global-error-handler');
 
 var allowlist = [
 	'http://localhost:3005',
@@ -61,19 +62,18 @@ app.get('/', (req, res) => {
 	res.status(200);
 	return res.json({ message: 'Server is running successfully' });
 });
+
 app.use('/login', require('./src/routes/auth/login'));
 app.use('/signup', require('./src/routes/auth/signup'));
 app.use('/refresh-token', require('./src/routes/auth/refresh-token'));
 app.use('/list-bike', require('./src/routes/list-bike/list-bike'));
-app.use(
-	'/add-constant-bike',
-	require('./src/routes/constant-data/add-constant-bikes')
-);
-app.use(
-	'/get-constant-bikes',
-	require('./src/routes/constant-data/get-constant-bikes')
-);
+app.use('/add-constant-bike', require('./src/routes/constant-data/add-constant-bikes'));
+app.use('/get-constant-bikes', require('./src/routes/constant-data/get-constant-bikes'));
 // app.use('/customers', require('./src/routes/customers'))
+
+app.use(errorLogger);
+app.use(errorResponder);
+app.use(invalidPathHandler);
 
 app.listen(port, () => {
 	console.log(`Bike-Hub is listening at http://localhost:${port}`);
