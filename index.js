@@ -25,6 +25,8 @@ var corsOptionsDelegate = function (req, callback) {
 };
 
 app.use(cors(corsOptionsDelegate));
+app.use(express.static(__dirname + '/public'));
+app.use('/uploads', express.static('uploads'));
 
 /**
  *setup .env file paths for dev, staging, prod
@@ -70,6 +72,7 @@ app.use('/list-bike', require('./src/routes/list-bike/list-bike'));
 app.use('/add-constant-bike', require('./src/routes/constant-data/add-constant-bikes'));
 app.use('/get-constant-bikes', require('./src/routes/constant-data/get-constant-bikes'));
 // app.use('/customers', require('./src/routes/customers'))
+app.use('/upload-multiple-image', require('./src/routes/upload/upload-image'));
 
 app.use(errorLogger);
 app.use(errorResponder);

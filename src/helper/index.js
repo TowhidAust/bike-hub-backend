@@ -30,10 +30,7 @@ const generateResponse = (status, message, result, extraJson) => {
 };
 const verifyJwt = async (token) => {
 	try {
-		const usersData = await jwt.verify(
-			token,
-			ENV_VARIABLES.ACCESS_TOKEN_SECRET
-		);
+		const usersData = await jwt.verify(token, ENV_VARIABLES.ACCESS_TOKEN_SECRET);
 		return usersData;
 	} catch (error) {
 		if (error) {
@@ -42,9 +39,7 @@ const verifyJwt = async (token) => {
 	}
 };
 const promiseHandler = (promise) => {
-	return promise
-		.then((data) => [data, undefined])
-		.catch((error) => Promise.resolve([undefined, error]));
+	return promise.then((data) => [data, undefined]).catch((error) => Promise.resolve([undefined, error]));
 };
 module.exports = {
 	encryption,
