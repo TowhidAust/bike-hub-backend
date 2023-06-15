@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 						lastname: data?.lastname,
 					},
 					ENV_VARIABLES.ACCESS_TOKEN_SECRET,
-					{ expiresIn: ENV_VARIABLES.ACCESS_TOKEN_VALIDITY }
+					{ expiresIn: ENV_VARIABLES.ACCESS_TOKEN_VALIDITY },
 				);
 
 				// creating refresh token
@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
 						lastname: data?.lastname,
 					},
 					ENV_VARIABLES.REFRESH_TOKEN_SECRET,
-					{ expiresIn: ENV_VARIABLES.REFRESH_TOKEN_VALIDITY }
+					{ expiresIn: ENV_VARIABLES.REFRESH_TOKEN_VALIDITY },
 				);
 
 				if (accessToken && refreshToken) {
@@ -57,14 +57,12 @@ router.post('/', async (req, res) => {
 						generateResponse(200, 'Login success', userInfo, {
 							accessToken: accessToken,
 							refreshToken: refreshToken,
-						})
+						}),
 					);
 				}
 			} catch (error) {
 				res.status(500);
-				return res.json(
-					generateResponse(500, error?.message ?? 'Jwt error')
-				);
+				return res.json(generateResponse(500, error?.message ?? 'Jwt error'));
 			}
 		} else {
 			res.status(403);

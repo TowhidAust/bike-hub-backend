@@ -15,8 +15,7 @@ const validateSignupPayload = (payload) => {
 	if (val?.error) {
 		return {
 			isValid: false,
-			message:
-				val?.error?.details[0]?.message ?? 'Payload validation error',
+			message: val?.error?.details[0]?.message ?? 'Payload validation error',
 		};
 	}
 
@@ -38,8 +37,7 @@ const validateLoginPayload = (payload) => {
 	if (val?.error) {
 		return {
 			isValid: false,
-			message:
-				val?.error?.details[0]?.message ?? 'Payload validation error',
+			message: val?.error?.details[0]?.message ?? 'Payload validation error',
 		};
 	}
 

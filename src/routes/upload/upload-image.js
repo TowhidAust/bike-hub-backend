@@ -1,6 +1,7 @@
 const express = require('express');
 var multer = require('multer');
 const router = express.Router();
+const path = require('path');
 const { initializeApp } = require('firebase/app');
 const { getStorage, ref, getDownloadURL, uploadBytesResumable } = require('firebase/storage');
 
@@ -17,17 +18,23 @@ router.post('/', [verifyToken, upload.array('used-bike-image', 2)], async (req, 
 	const filesArr = req?.files;
 	const userId = req.query?.userId;
 	if (userId) {
-		const uploadPromiseArr = [];
+		const uploadTasksPromiseArr = [];
 		for (let i in filesArr) {
 			const singleFile = filesArr[i];
 			const metaData = { contentType: singleFile.mimetype };
-			const firebaseStorageRef = ref(firebaseStorage, `images/${userId}/${singleFile.originalname}`);
+			const firebaseStorageRef = ref(
+				firebaseStorage,
+				`images/${userId}/${Date.now()}${path.extname(singleFile?.originalname)}`,
+			);
 			const uploadTaskPromise = await uploadBytesResumable(firebaseStorageRef, singleFile.buffer, metaData);
-			uploadPromiseArr.push(uploadTaskPromise);
+			uploadTasksPromiseArr.push(uploadTaskPromise);
 		}
-		Promise.all(uploadPromiseArr)
+
+		Promise.all(uploadTasksPromiseArr)
 			.then(async (uploadTasksArr) => {
-				const downloadUrlPromiseArr = uploadTasksArr.map(async (uploadTask) => await getDownloadURL(uploadTask?.ref));
+				const downloadUrlPromiseArr = uploadTasksArr.map(async (uploadTask) => {
+					return await getDownloadURL(uploadTask?.ref);
+				});
 				Promise.all(downloadUrlPromiseArr).then((downloadUrlArr) => {
 					res.status(200);
 					return res.json(generateResponse(200, 'Image uploaded successfully', downloadUrlArr));

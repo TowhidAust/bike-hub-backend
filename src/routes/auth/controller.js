@@ -21,17 +21,13 @@ const generateJwtAndSaveUsersData = async (usersData, res) => {
 			createdAt: data?.createdAt,
 		};
 
-		const accessToken = jwt.sign(
-			{ ...dataWithoutPassword },
-			ENV_VARIABLES.ACCESS_TOKEN_SECRET,
-			{ expiresIn: ENV_VARIABLES.ACCESS_TOKEN_VALIDITY }
-		);
+		const accessToken = jwt.sign({ ...dataWithoutPassword }, ENV_VARIABLES.ACCESS_TOKEN_SECRET, {
+			expiresIn: ENV_VARIABLES.ACCESS_TOKEN_VALIDITY,
+		});
 
-		const refreshToken = jwt.sign(
-			{ ...dataWithoutPassword },
-			ENV_VARIABLES.REFRESH_TOKEN_SECRET,
-			{ expiresIn: ENV_VARIABLES.REFRESH_TOKEN_VALIDITY }
-		);
+		const refreshToken = jwt.sign({ ...dataWithoutPassword }, ENV_VARIABLES.REFRESH_TOKEN_SECRET, {
+			expiresIn: ENV_VARIABLES.REFRESH_TOKEN_VALIDITY,
+		});
 
 		if (accessToken && refreshToken) {
 			res.status(200);
@@ -40,14 +36,12 @@ const generateJwtAndSaveUsersData = async (usersData, res) => {
 					accessToken: accessToken,
 					refreshToken: refreshToken,
 					result: dataWithoutPassword,
-				})
+				}),
 			);
 		}
 	} catch (error) {
 		res.status(500);
-		return res.json(
-			generateResponse(500, error?.message ?? 'Internal server error')
-		);
+		return res.json(generateResponse(500, error?.message ?? 'Internal server error'));
 	}
 };
 
