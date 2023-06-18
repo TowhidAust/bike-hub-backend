@@ -12,7 +12,7 @@ const bikeListModel = new Schema(
 			required: true,
 		},
 		imageUrl: {
-			type: String,
+			type: Array,
 			required: true,
 		},
 		brand: {

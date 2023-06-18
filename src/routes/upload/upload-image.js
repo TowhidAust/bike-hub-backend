@@ -14,9 +14,9 @@ const firebaseStorage = getStorage(app);
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.post('/', [verifyToken, upload.array('used-bike-image', 2)], async (req, res) => {
+router.post('/', [verifyToken, upload.array('images', 4)], async (req, res) => {
 	const filesArr = req?.files;
-	const userId = req.query?.userId;
+	const userId = req?.query?.userId;
 	if (userId) {
 		const uploadTasksPromiseArr = [];
 		for (let i in filesArr) {
@@ -44,6 +44,9 @@ router.post('/', [verifyToken, upload.array('used-bike-image', 2)], async (req, 
 				res.status(500);
 				return res.json(generateResponse(500, error?.message || 'Image upload error'));
 			});
+	} else {
+		res.status(400);
+		return res.json(generateResponse(400, 'User not found'))
 	}
 });
 
