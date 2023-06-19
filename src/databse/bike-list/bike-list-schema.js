@@ -3,82 +3,22 @@ const Schema = mongoose.Schema;
 
 const bikeListModel = new Schema(
 	{
-		userId: {
-			type: String,
-			required: true,
-		},
-		title: {
-			type: String,
-			required: true,
-		},
-		imageUrl: {
-			type: Array,
-			required: true,
-		},
-		brand: {
-			type: String,
-			required: true,
-		},
-		price: {
-			type: Number,
-			required: true,
-		},
-		publishYear: {
-			type: String,
-			required: true,
-		},
-		kilometerRun: {
-			type: Number,
-			required: true,
-		},
-		owner: {
-			type: String,
-			required: true,
-		},
-		division: {
-			type: String,
-			required: true,
-		},
-		district: {
-			type: String,
-			required: true,
-		},
-		cc: {
-			type: Number,
-			required: true,
-		},
-		condition: {
-			type: String,
-			required: true,
-		},
-		description: {
-			type: String,
-			required: true,
-		},
-		isNegotiate: {
-			type: Boolean,
-			required: true,
-		},
-		isReviewed: {
-			type: Boolean,
-			required: true,
-		},
-		frontBrake: {
-			type: String,
-			required: true,
-		},
-		rareBrake: {
-			type: String,
-			required: true,
-		},
-		frontTire: {
-			type: String,
-			required: true,
-		},
-		rareTire: {
-			type: String,
-			required: true,
-		},
+		userId: String,
+		bikeCode: String,
+		bikeName: String,
+		images: Array,
+		registrationZone: String,
+		yearOfRegistration: String,
+		kmRun: String,
+		durationOfRegistration: String,
+		bikeModelYear: String,
+		isAccidentHistory: Boolean,
+		ownerShipStatus: String,
+		division: String,
+		phone: String,
+		address: String,
+		detailDescription: String,
+		district: String,
 	},
 	{ timestamps: true }
 );
