@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const bikeListModel = new Schema(
 	{
+		price: String,
 		userId: String,
 		bikeCode: String,
 		bikeName: String,
@@ -20,7 +21,7 @@ const bikeListModel = new Schema(
 		detailDescription: String,
 		district: String,
 	},
-	{ timestamps: true }
+	{ timestamps: true },
 );
 
 const BikeListSchema = mongoose.model('bikelists', bikeListModel);
