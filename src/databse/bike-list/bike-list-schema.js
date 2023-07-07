@@ -3,9 +3,10 @@ const Schema = mongoose.Schema;
 
 const bikeListModel = new Schema(
 	{
+		userId: String,
+		isReviewed: Boolean,
 		price: String,
 		isNegotiable: Boolean,
-		userId: String,
 		bikeName: String,
 		cc: Number,
 		bikeBrand: String,
@@ -23,6 +24,7 @@ const bikeListModel = new Schema(
 		address: String,
 		detailDescription: String,
 		district: String,
+		approvedBy: String,
 	},
 	{ timestamps: true },
 );

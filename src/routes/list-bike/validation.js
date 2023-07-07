@@ -2,6 +2,7 @@ const Joi = require('joi');
 const validateListBikePayload = (payload) => {
 	const schema = Joi.object({
 		userId: Joi.string().required(),
+		isReviewed: Joi.boolean().required(),
 		bikeCode: Joi.string().optional(),
 		price: Joi.string().required(),
 		isNegotiable: Joi.boolean().required(),
@@ -40,6 +41,30 @@ const validateListBikePayload = (payload) => {
 	};
 };
 
+const validateApproveListedBikePayload = (payload) => {
+	const schema = Joi.object({
+		bikeListId: Joi.string().required(),
+		userId: Joi.string().required(),
+	});
+
+	const val = schema.validate(payload, { abortEarly: false });
+
+	if (val?.error) {
+		return {
+			isValid: false,
+			message: val?.error?.details[0]?.message ?? 'Payload validation error',
+			details: val?.error,
+		};
+	}
+
+	return {
+		isValid: true,
+		message: 'Payload is valid',
+		data: val?.value,
+	};
+};
+
 module.exports = {
 	validateListBikePayload,
+	validateApproveListedBikePayload,
 };

@@ -69,6 +69,8 @@ app.use('/login', require('./src/routes/auth/login'));
 app.use('/signup', require('./src/routes/auth/signup'));
 app.use('/refresh-token', require('./src/routes/auth/refresh-token'));
 app.use('/list-bike', require('./src/routes/list-bike/list-bike'));
+app.use('/used-bike-list', require('./src/routes/list-bike/get-used-bike-list'));
+app.use('/approve-listed-bike', require('./src/routes/list-bike/approve-listed-bike'));
 app.use('/add-constant-bike', require('./src/routes/constant-data/add-constant-bikes'));
 app.use('/get-constant-bikes', require('./src/routes/constant-data/get-constant-bikes'));
 // app.use('/customers', require('./src/routes/customers'))
