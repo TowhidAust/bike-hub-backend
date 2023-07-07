@@ -1,9 +1,10 @@
 const express = require('express');
 const BikeListSchema = require('../../databse/bike-list/bike-list-schema');
 const { promiseHandler, generateResponse } = require('../../helper');
+const { verifyToken } = require('../../middleware');
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
 	const queryParams = req.query;
 	const page = parseInt(queryParams?.page) || 0;
 	const pageSize = parseInt(queryParams?.pageSize) || 0;

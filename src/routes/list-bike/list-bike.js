@@ -3,9 +3,10 @@ const Signup = require('../../databse/auth/auth-schema');
 const BikeListSchema = require('../../databse/bike-list/bike-list-schema');
 const { generateResponse } = require('../../helper');
 const { validateListBikePayload } = require('./validation');
+const { verifyToken } = require('../../middleware');
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
 	const payload = req?.body;
 	const { isValid, details } = validateListBikePayload(payload);
 	if (!isValid) {

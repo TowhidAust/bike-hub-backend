@@ -2,9 +2,10 @@ const express = require('express');
 const BikeListSchema = require('../../databse/bike-list/bike-list-schema');
 const { promiseHandler, generateResponse } = require('../../helper');
 const { validateApproveListedBikePayload } = require('./validation');
+const { verifyToken } = require('../../middleware');
 const router = express.Router();
 
-router.patch('/', async (req, res) => {
+router.patch('/', verifyToken, async (req, res) => {
 	const payload = req?.body;
 	const { isValid, details } = validateApproveListedBikePayload(payload);
 	if (!isValid) {
