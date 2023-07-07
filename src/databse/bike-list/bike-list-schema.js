@@ -4,8 +4,10 @@ const Schema = mongoose.Schema;
 const bikeListModel = new Schema(
 	{
 		price: String,
+		isNegotiable: Boolean,
 		userId: String,
 		bikeName: String,
+		cc: Number,
 		bikeBrand: String,
 		bikeCode: String,
 		images: Array,
