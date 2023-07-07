@@ -5,8 +5,9 @@ const bikeListModel = new Schema(
 	{
 		price: String,
 		userId: String,
-		bikeCode: String,
 		bikeName: String,
+		bikeBrand: String,
+		bikeCode: String,
 		images: Array,
 		registrationZone: String,
 		yearOfRegistration: String,

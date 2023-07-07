@@ -1,24 +1,25 @@
 const Joi = require('joi');
 const validateListBikePayload = (payload) => {
 	const schema = Joi.object({
-		price: Joi.string().required(),
 		userId: Joi.string().required(),
-		bikeCode: Joi.string().required(),
+		bikeCode: Joi.string().optional(),
+		price: Joi.string().required(),
 		bikeName: Joi.string().required(),
-		images: Joi.string().required(),
+		bikeBrand: Joi.string().required(),
+		bikeModelYear: Joi.string().required(),
+		images: Joi.array().required(),
 		registrationZone: Joi.string().required(),
 		yearOfRegistration: Joi.string().required(),
 		kmRun: Joi.string().required(),
 		durationOfRegistration: Joi.string().required(),
-		bikeModelYear: Joi.string().required(),
 		isAccidentHistory: Joi.boolean().required(),
-		ownerShipStatus: Joi.string().required(),
+		ownerShipStatus: Joi.string().required().valid('1st Owner', '2nd Owner', '3rd Owner', '4th Owner', '5th Owner'),
 		division: Joi.string().required(),
 		phone: Joi.string().required(),
 		address: Joi.string().required(),
 		detailDescription: Joi.string().required(),
 		district: Joi.string().required(),
-	}).with('password', 'confirmPassword');
+	});
 
 	const val = schema.validate(payload, { abortEarly: false });
 
