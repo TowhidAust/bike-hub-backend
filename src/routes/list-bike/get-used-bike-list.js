@@ -1,10 +1,9 @@
 const express = require('express');
 const BikeListSchema = require('../../databse/bike-list/bike-list-schema');
 const { promiseHandler, generateResponse } = require('../../helper');
-const { verifyToken } = require('../../middleware');
 const router = express.Router();
 
-router.get('/', verifyToken, async (req, res) => {
+router.get('/', async (req, res) => {
 	const queryParams = req.query;
 	const page = parseInt(queryParams?.page) || 0;
 	const pageSize = parseInt(queryParams?.pageSize) || 0;
@@ -16,7 +15,7 @@ router.get('/', verifyToken, async (req, res) => {
 	}
 
 	const [usedBikesBikesData, usedBikesDataErr] = await promiseHandler(
-		BikeListSchema.find({ isReviewed: false }) // todo need to make it true. using false for now to show it in frontend
+		BikeListSchema.find() //{ isReviewed: false }
 			.skip(page * pageSize)
 			.limit(pageSize),
 	);

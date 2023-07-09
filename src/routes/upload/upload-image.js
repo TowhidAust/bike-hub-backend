@@ -26,8 +26,16 @@ router.post('/', [verifyToken, upload.array('images', 4)], async (req, res) => {
 				firebaseStorage,
 				`images/${userId}/${Date.now()}${path.extname(singleFile?.originalname)}`,
 			);
-			const uploadTaskPromise = await uploadBytesResumable(firebaseStorageRef, singleFile.buffer, metaData);
-			uploadTasksPromiseArr.push(uploadTaskPromise);
+
+			// const [data, err] = await promiseHandler(uploadBytesResumable(firebaseStorageRef, singleFile.buffer, metaData));
+
+			try {
+				const uploadTaskPromise = await uploadBytesResumable(firebaseStorageRef, singleFile.buffer, metaData);
+				uploadTasksPromiseArr.push(uploadTaskPromise);
+			} catch (error) {
+				res.status(500);
+				return res.json(generateResponse(500, error?.message || 'Something went wrong in upload task promise'))
+			}
 		}
 
 		Promise.all(uploadTasksPromiseArr)
