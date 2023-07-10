@@ -40,8 +40,6 @@ router.post('/', verifyToken, async (req, res) => {
 			});
 		}
 	});
-
-	// return res.json({ message: payload });
 });
 
 module.exports = router;

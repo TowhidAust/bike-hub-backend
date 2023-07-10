@@ -11,7 +11,8 @@ router.get('/', async (req, res) => {
 	const [count, countErr] = await promiseHandler(BikeListSchema.countDocuments());
 
 	if (countErr) {
-		return res.status(500, countErr?.message ?? 'Internal server error');
+		res.status(500);
+		return res.json(generateResponse(500, countErr?.message ?? 'Internal server error'));
 	}
 
 	const [usedBikesBikesData, usedBikesDataErr] = await promiseHandler(
@@ -21,7 +22,8 @@ router.get('/', async (req, res) => {
 	);
 
 	if (usedBikesDataErr) {
-		return res.status(500, usedBikesDataErr?.message ?? 'Internal server error');
+		res.status(500);
+		return res.json(generateResponse(500, usedBikesDataErr?.message ?? 'Internal server error'));
 	}
 
 	if (usedBikesBikesData && count) {

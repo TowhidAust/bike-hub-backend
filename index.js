@@ -4,6 +4,7 @@ const app = express();
 const port = 3000;
 app.use(express.json());
 const path = require('path');
+var bodyParser = require('body-parser');
 var cors = require('cors');
 const mongoose = require('mongoose');
 const { errorLogger, errorResponder, invalidPathHandler } = require('./src/middleware/global-error-handler');
@@ -24,9 +25,12 @@ var corsOptionsDelegate = function (req, callback) {
 	callback(null, corsOptions); // callback expects two parameters: error and options
 };
 
+app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
+app.use(bodyParser.json()); // parse application/json
+
 app.use(cors(corsOptionsDelegate));
 app.use(express.static(__dirname + '/public'));
-app.use('/uploads', express.static('uploads'));
+// app.use('/uploads', express.static('uploads'));
 
 /**
  *setup .env file paths for dev, staging, prod
@@ -70,10 +74,10 @@ app.use('/signup', require('./src/routes/auth/signup'));
 app.use('/refresh-token', require('./src/routes/auth/refresh-token'));
 app.use('/list-bike', require('./src/routes/list-bike/list-bike'));
 app.use('/used-bike-list', require('./src/routes/list-bike/get-used-bike-list'));
+app.use('/used-bike-details', require('./src/routes/list-bike/get-used-bike-by-id'));
 app.use('/approve-listed-bike', require('./src/routes/list-bike/approve-listed-bike'));
 app.use('/add-constant-bike', require('./src/routes/constant-data/add-constant-bikes'));
 app.use('/get-constant-bikes', require('./src/routes/constant-data/get-constant-bikes'));
-// app.use('/customers', require('./src/routes/customers'))
 app.use('/upload/multiple', require('./src/routes/upload/upload-image'));
 
 app.use(errorLogger);
