@@ -79,6 +79,7 @@ app.use('/approve-listed-bike', require('./src/routes/list-bike/approve-listed-b
 app.use('/add-constant-bike', require('./src/routes/constant-data/add-constant-bikes'));
 app.use('/get-constant-bikes', require('./src/routes/constant-data/get-constant-bikes'));
 app.use('/upload/multiple', require('./src/routes/upload/upload-image'));
+app.use('/add-product', require('./src/routes/products/add-products'));
 
 app.use(errorLogger);
 app.use(errorResponder);

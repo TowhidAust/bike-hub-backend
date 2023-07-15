@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const Signup = require('../../databse/auth/auth-schema');
-const { decryption, generateResponse } = require('../../helper');
+const { decryption, generateResponse } = require('../../utils/helper');
 const { ENV_VARIABLES } = require('../../utils/constants');
-const { validateLoginPayload } = require('./validation');
+const { validateLoginPayload } = require('../../validations/auth/auth-validation');
 
 router.post('/', async (req, res) => {
 	const { phone, password } = req.body;
@@ -65,8 +65,8 @@ router.post('/', async (req, res) => {
 				return res.json(generateResponse(500, error?.message ?? 'Jwt error'));
 			}
 		} else {
-			res.status(403);
-			res.json(generateResponse(403, 'Invalid credentials'));
+			res.status(401);
+			res.json(generateResponse(401, 'Invalid credentials'));
 		}
 	});
 });

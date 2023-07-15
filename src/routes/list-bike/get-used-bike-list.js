@@ -1,6 +1,6 @@
 const express = require('express');
 const BikeListSchema = require('../../databse/bike-list/bike-list-schema');
-const { promiseHandler, generateResponse } = require('../../helper');
+const { promiseHandler, generateResponse } = require('../../utils/helper');
 const router = express.Router();
 
 router.get('/', async (req, res) => {

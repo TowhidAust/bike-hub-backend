@@ -1,9 +1,9 @@
 const express = require('express');
 const Signup = require('../../databse/auth/auth-schema');
 const ConstantBikeSchema = require('../../databse/constant-data/add-constant-bikes-schema');
-const { generateResponse, verifyJwt, promiseHandler } = require('../../helper');
+const { generateResponse, verifyJwt, promiseHandler } = require('../../utils/helper');
 const { verifyToken } = require('../../middleware');
-const { validateAddConstantBikePayload } = require('./validation');
+const { validateAddConstantBikePayload } = require('../../validations/constant-data/constat-data-validation');
 const { USER_ROLES } = require('../../utils/constants');
 const router = express.Router();
 
@@ -34,10 +34,8 @@ router.post('/', verifyToken, async (req, res) => {
 		res.status(400);
 		return res.json(
 			generateResponse(400, 'Payload is not valid', undefined, {
-				details: {
-					type: 'FIELD_ERROR',
-					details,
-				},
+				type: 'FIELD_ERROR',
+				details,
 			}),
 		);
 	}

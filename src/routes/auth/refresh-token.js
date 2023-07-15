@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const { generateResponse } = require('../../helper');
+const { generateResponse } = require('../../utils/helper');
 const { ENV_VARIABLES } = require('../../utils/constants');
 
 router.post('/', async (req, res) => {

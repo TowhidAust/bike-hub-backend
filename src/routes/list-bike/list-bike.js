@@ -1,8 +1,8 @@
 const express = require('express');
 const Signup = require('../../databse/auth/auth-schema');
 const BikeListSchema = require('../../databse/bike-list/bike-list-schema');
-const { generateResponse } = require('../../helper');
-const { validateListBikePayload } = require('./validation');
+const { generateResponse } = require('../../utils/helper');
+const { validateListBikePayload } = require('../../validations/list-bike/list-bike-validation');
 const { verifyToken } = require('../../middleware');
 const router = express.Router();
 
@@ -13,10 +13,8 @@ router.post('/', verifyToken, async (req, res) => {
 		res.status(400);
 		return res.json(
 			generateResponse(400, 'Payload is not valid', undefined, {
-				details: {
-					type: 'FIELD_ERROR',
-					details,
-				},
+				type: 'FIELD_ERROR',
+				details,
 			}),
 		);
 	}

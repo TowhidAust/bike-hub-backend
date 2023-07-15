@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { ENV_VARIABLES } = require('../utils/constants');
-const { generateResponse } = require('../helper');
+const { generateResponse } = require('../utils/helper');
 
 async function verifyToken(req, res, next) {
 	const bearerHeader = req.headers['authorization'];

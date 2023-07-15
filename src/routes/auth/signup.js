@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Signup = require('../../databse/auth/auth-schema');
-const { encryption, generateResponse } = require('../../helper');
-const { generateJwtAndSaveUsersData } = require('./controller');
-const { validateSignupPayload } = require('./validation');
+const { encryption, generateResponse } = require('../../utils/helper');
+const { generateJwtAndSaveUsersData } = require('../../controller/auth/auth-controller');
+const { validateSignupPayload } = require('../../validations/auth/auth-validation');
 
 // signup user account
 router.post('/', async (req, res) => {

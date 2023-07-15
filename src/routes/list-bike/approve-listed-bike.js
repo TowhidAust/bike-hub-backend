@@ -1,7 +1,7 @@
 const express = require('express');
 const BikeListSchema = require('../../databse/bike-list/bike-list-schema');
-const { promiseHandler, generateResponse } = require('../../helper');
-const { validateApproveListedBikePayload } = require('./validation');
+const { promiseHandler, generateResponse } = require('../../utils/helper');
+const { validateApproveListedBikePayload } = require('../../validations/list-bike/list-bike-validation');
 const { verifyToken } = require('../../middleware');
 const router = express.Router();
 
@@ -12,10 +12,8 @@ router.patch('/', verifyToken, async (req, res) => {
 		res.status(400);
 		return res.json(
 			generateResponse(400, 'Payload is not valid', undefined, {
-				details: {
-					type: 'FIELD_ERROR',
-					details,
-				},
+				type: 'FIELD_ERROR',
+				details,
 			}),
 		);
 	}

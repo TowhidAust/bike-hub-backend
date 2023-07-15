@@ -5,7 +5,7 @@ const path = require('path');
 const { initializeApp } = require('firebase/app');
 const { getStorage, ref, getDownloadURL, uploadBytesResumable } = require('firebase/storage');
 const { verifyToken } = require('../../middleware');
-const { generateResponse } = require('../../helper');
+const { generateResponse } = require('../../utils/helper');
 const { firebaseConfig } = require('../../firebase/firebase-config');
 
 const app = initializeApp(firebaseConfig);

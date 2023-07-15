@@ -1,6 +1,6 @@
 const CryptoJS = require('crypto-js');
 const jwt = require('jsonwebtoken');
-const { ENV_VARIABLES } = require('../utils/constants');
+const { ENV_VARIABLES } = require('../constants');
 
 const encryption = (message) => {
 	// const x = 7;
