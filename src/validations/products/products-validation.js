@@ -14,7 +14,7 @@ const isValidatedUser = async (req) => {
 		if (error) {
 			return false;
 		}
-		if (data?.role.includes(USER_ROLES.SELLER)) {
+		if (data?.role.includes(USER_ROLES.SELLER) || data?.role?.includes(USER_ROLES.SUPER_ADMIN)) {
 			return true;
 		}
 		return false;
@@ -25,19 +25,21 @@ const isValidatedUser = async (req) => {
 
 const validateProductListPayload = (payload) => {
 	const schema = Joi.object({
-		ownerId: Joi.string(),
-		title: Joi.string(),
-		price: Joi.string(),
-		images: Joi.array(),
-		brand: Joi.string(),
-		modelNo: Joi.string(),
-		modelYear: Joi.string(),
-		availableColors: Joi.array(),
-		category: Joi.string(),
-		isCertified: Joi.boolean(),
-		certificationName: Joi.string(),
-		quantity: Joi.number(),
-		description: Joi.string(),
+		ownerId: Joi.string().required(),
+		title: Joi.string().required(),
+		category: Joi.string().required(),
+		isSku: Joi.boolean().required(),
+		price: Joi.number().required(),
+		brand: Joi.string().required(),
+		modelNo: Joi.string().required(),
+		modelYear: Joi.string().required(),
+		madeIn: Joi.string().required(),
+		thumnail: Joi.string().required(),
+		images: Joi.array().required(),
+		isCertified: Joi.boolean().optional(),
+		certificationName: Joi.string().optional(),
+		quantity: Joi.number().required(),
+		description: Joi.string().required(),
 	});
 
 	const val = schema.validate(payload, { abortEarly: false });

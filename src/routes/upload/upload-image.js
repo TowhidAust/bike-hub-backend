@@ -35,11 +35,19 @@ router.post('/', [verifyToken, upload.array('images', 4)], async (req, res) => {
 		Promise.all(uploadTasksPromiseArr)
 			.then(async (uploadTasksArr) => {
 				const downloadUrlPromiseArr = uploadTasksArr.map(async (uploadTask) => {
-					return await getDownloadURL(uploadTask?.ref);
+					const imagePath = uploadTask?.ref?.fullPath;
+					const downloadUrl = await getDownloadURL(uploadTask?.ref);
+					return {
+						imagePath,
+						downloadUrl
+					}
 				});
 				Promise.all(downloadUrlPromiseArr).then((downloadUrlArr) => {
 					res.status(200);
 					return res.json(generateResponse(200, 'Image uploaded successfully', downloadUrlArr));
+				}).catch((error) => {
+					res.status(500);
+					return res.json(generateResponse(500, error?.message || 'Image upload error'));
 				});
 			})
 			.catch((error) => {
