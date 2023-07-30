@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const productVariantModel = new Schema(
   {
+    productId: String,
     price: Number,
     discount: Number,
     color: String,

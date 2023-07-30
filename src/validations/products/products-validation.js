@@ -27,11 +27,11 @@ const validateProductListPayload = (payload) => {
 	const schema = Joi.object({
 		ownerId: Joi.string().required(),
 		title: Joi.string().required(),
-		category: Joi.string().required(),
-		isSku: Joi.boolean().required(),
+		category: Joi.array().required(), // ['HELMET']
+		hasSku: Joi.boolean().required(),
 		price: Joi.number().required(),
 		discount: Joi.number().optional(),
-		quantity: Joi.number().optional(),
+		quantity: Joi.number().required(),
 		inStock: Joi.boolean().required(),
 		brand: Joi.string().required(),
 		modelNo: Joi.string().required(),
@@ -65,16 +65,19 @@ const validateProductListPayload = (payload) => {
 
 const validateAddProductVariantPayload = (payload) => {
 	const schema = Joi.object({
-		price: Joi.string(),
-		discount: Joi.string(),
-		color: Joi.string(),
-		thumbnail: Joi.string(),
-		sizes: Joi.array().items({
-			_id: Joi.string(),
-			size: Joi.string(),
-			inStock: Joi.bool(),
-			quantity: Joi.number(),
-		}),
+		productId: Joi.string().required(),
+		price: Joi.number().required(),
+		discount: Joi.number().optional(),
+		color: Joi.string().required(),
+		thumbnail: Joi.string().optional(),
+		sizes: Joi.array().items(
+			Joi.object().keys({
+				_id: Joi.string().required(),
+				size: Joi.string().required(),
+				inStock: Joi.boolean().required(),
+				quantity: Joi.number().required(),
+			})
+		).required(),
 	});
 
 	const val = schema.validate(payload, { abortEarly: false });

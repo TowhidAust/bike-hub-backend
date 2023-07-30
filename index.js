@@ -80,6 +80,7 @@ app.use('/add-constant-bike', require('./src/routes/constant-data/add-constant-b
 app.use('/get-constant-bikes', require('./src/routes/constant-data/get-constant-bikes'));
 app.use('/upload/multiple', require('./src/routes/upload/upload-image'));
 app.use('/add-product', require('./src/routes/products/add-products'));
+app.use('/add-product-variant', require('./src/routes/products/add-product-variant'));
 
 app.use(errorLogger);
 app.use(errorResponder);
