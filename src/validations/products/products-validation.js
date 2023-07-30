@@ -30,6 +30,9 @@ const validateProductListPayload = (payload) => {
 		category: Joi.string().required(),
 		isSku: Joi.boolean().required(),
 		price: Joi.number().required(),
+		discount: Joi.number().optional(),
+		quantity: Joi.number().optional(),
+		inStock: Joi.boolean().required(),
 		brand: Joi.string().required(),
 		modelNo: Joi.string().required(),
 		modelYear: Joi.string().required(),
@@ -38,8 +41,9 @@ const validateProductListPayload = (payload) => {
 		images: Joi.array().required(),
 		isCertified: Joi.boolean().optional(),
 		certificationName: Joi.string().optional(),
-		quantity: Joi.number().required(),
 		description: Joi.string().required(),
+		warranty: Joi.number().optional(),
+		warrantyUnit: Joi.string().optional()
 	});
 
 	const val = schema.validate(payload, { abortEarly: false });
@@ -59,4 +63,35 @@ const validateProductListPayload = (payload) => {
 	};
 };
 
-module.exports = { isValidatedUser, validateProductListPayload };
+const validateAddProductVariantPayload = (payload) => {
+	const schema = Joi.object({
+		price: Joi.string(),
+		discount: Joi.string(),
+		color: Joi.string(),
+		thumbnail: Joi.string(),
+		sizes: Joi.array().items({
+			_id: Joi.string(),
+			size: Joi.string(),
+			inStock: Joi.bool(),
+			quantity: Joi.number(),
+		}),
+	});
+
+	const val = schema.validate(payload, { abortEarly: false });
+
+	if (val?.error) {
+		return {
+			isValid: false,
+			message: val?.error?.details[0]?.message ?? 'Payload validation error',
+			details: val?.error,
+		};
+	}
+
+	return {
+		isValid: true,
+		message: 'Payload is valid',
+		data: val?.value,
+	};
+};
+
+module.exports = { isValidatedUser, validateProductListPayload, validateAddProductVariantPayload };
