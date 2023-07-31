@@ -6,7 +6,7 @@ const productModel = new Schema(
 		ownerId: String,
 		title: String,
 		category: Array,
-		isSku: Boolean,
+		hasSku: { type: Boolean, required: true },
 		price: Number,
 		brand: String,
 		modelNo: String,
