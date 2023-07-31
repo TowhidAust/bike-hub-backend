@@ -37,7 +37,7 @@ const validateProductListPayload = (payload) => {
 		modelNo: Joi.string().required(),
 		modelYear: Joi.string().required(),
 		madeIn: Joi.string().required(),
-		thumnail: Joi.string().required(),
+		thumbnail: Joi.string().required(),
 		images: Joi.array().required(),
 		isCertified: Joi.boolean().optional(),
 		certificationName: Joi.string().optional(),

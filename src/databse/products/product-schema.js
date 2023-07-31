@@ -12,7 +12,7 @@ const productModel = new Schema(
 		modelNo: String,
 		modelYear: String,
 		madeIn: String,
-		thumnail: String,
+		thumbnail: String,
 		images: Array,
 		isCertified: Boolean,
 		certificationName: String,

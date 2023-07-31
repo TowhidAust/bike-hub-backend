@@ -1,9 +1,8 @@
 const express = require('express');
-const { verifyToken } = require('../../middleware');
 const ProductSchema = require('../../databse/products/product-schema');
 const { promiseHandler, generateResponse } = require('../../utils/helper');
 const router = express.Router();
-router.get('/', verifyToken, async (req, res) => {
+router.get('/', async (req, res) => {
   const { category, id } = req.query;
   const page = parseInt(req?.query?.page) || 0;
   const pageSize = parseInt(req?.query?.pageSize) || 0;
