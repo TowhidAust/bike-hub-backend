@@ -8,6 +8,7 @@ const productModel = new Schema(
 		category: Array,
 		hasSku: { type: Boolean, required: true },
 		price: Number,
+		inStock: Boolean,
 		brand: String,
 		modelNo: String,
 		modelYear: String,
@@ -20,6 +21,7 @@ const productModel = new Schema(
 		description: String,
 		warranty: Number,
 		warrantyUnit: String,
+		isArchived: Boolean,
 	},
 	{ timestamps: true },
 );

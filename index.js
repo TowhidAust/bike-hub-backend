@@ -71,18 +71,24 @@ app.get('/', (req, res) => {
 
 app.use('/login', require('./src/routes/auth/login'));
 app.use('/signup', require('./src/routes/auth/signup'));
+
+// portal
 app.use('/refresh-token', require('./src/routes/auth/refresh-token'));
 app.use('/list-bike', require('./src/routes/list-bike/list-bike'));
 app.use('/used-bike-list', require('./src/routes/list-bike/get-used-bike-list'));
 app.use('/used-bike-details', require('./src/routes/list-bike/get-used-bike-by-id'));
-app.use('/approve-listed-bike', require('./src/routes/list-bike/approve-listed-bike'));
 app.use('/add-constant-bike', require('./src/routes/constant-data/add-constant-bikes'));
 app.use('/get-constant-bikes', require('./src/routes/constant-data/get-constant-bikes'));
 app.use('/upload/multiple', require('./src/routes/upload/upload-image'));
-app.use('/add-product', require('./src/routes/products/add-products'));
-app.use('/add-product-variant', require('./src/routes/products/add-product-variant'));
+app.use('/add-product-variant', require('./src/routes/admin/products/add-product-variant'));
 app.use('/get-products', require('./src/routes/products/get-products'));
+
+// admin
+app.use('/approve-listed-bike', require('./src/routes/list-bike/approve-listed-bike'));
+app.use('/add-product', require('./src/routes/admin/products/add-products'));
 app.use('/get-product-variants', require('./src/routes/products/get-prod-variants'));
+app.use('/update-product', require('./src/routes/admin/products/update-product'));
+app.use('/update-product-variant', require('./src/routes/admin/products/update-prod-variant'));
 
 app.use(errorLogger);
 app.use(errorResponder);
