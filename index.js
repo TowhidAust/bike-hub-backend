@@ -69,8 +69,11 @@ app.get('/', (req, res) => {
 	return res.json({ message: 'Server is running successfully' });
 });
 
+// auth
 app.use('/login', require('./src/routes/auth/login'));
 app.use('/signup', require('./src/routes/auth/signup'));
+app.use('/update-user', require('./src/routes/auth/update-user'));
+app.use('/get-user-details', require('./src/routes/auth/get-user-details'));
 
 // portal
 app.use('/refresh-token', require('./src/routes/auth/refresh-token'));

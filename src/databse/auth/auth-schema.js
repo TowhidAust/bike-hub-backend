@@ -27,6 +27,20 @@ const signupModel = new Schema(
 			type: Array,
 			required: true,
 		},
+		division: {
+			type: String
+		},
+		district: {
+			type: String
+		},
+		address: {
+			type: String
+		},
+		deliveryLocation: {
+			division: String,
+			district: String,
+			address: String
+		}
 	},
 	{ timestamps: true }
 );

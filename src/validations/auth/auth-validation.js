@@ -48,7 +48,39 @@ const validateLoginPayload = (payload) => {
 	};
 };
 
+const validateUpdateUserPayload = (payload) => {
+	const schema = Joi.object({
+		firstname: Joi.string(),
+		lastname: Joi.string(),
+		division: Joi.string(),
+		district: Joi.string(),
+		address: Joi.string(),
+		deliveryLocation: Joi.object({
+			division: Joi.string().required(),
+			district: Joi.string().required(),
+			address: Joi.string().required()
+		})
+	});
+
+	const val = schema.validate(payload);
+
+	if (val?.error) {
+		return {
+			isValid: false,
+			message: val?.error?.details[0]?.message ?? 'Payload validation error',
+			details: val?.error,
+		};
+	}
+
+	return {
+		isValid: true,
+		message: 'Payload is valid',
+		data: val?.value,
+	};
+};
+
 module.exports = {
 	validateSignupPayload,
 	validateLoginPayload,
+	validateUpdateUserPayload
 };
