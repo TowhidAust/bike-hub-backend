@@ -93,6 +93,11 @@ app.use('/get-product-variants', require('./src/routes/products/get-prod-variant
 app.use('/update-product', require('./src/routes/admin/products/update-product'));
 app.use('/update-product-variant', require('./src/routes/admin/products/update-prod-variant'));
 
+// super admin
+app.use('/add-category', require('./src/routes/admin/categories/add-categories'));
+app.use('/update-category', require('./src/routes/admin/categories/update-categories'));
+app.use('/get-category', require('./src/routes/admin/categories/gell-categories'));
+
 app.use(errorLogger);
 app.use(errorResponder);
 app.use(invalidPathHandler);
