@@ -18,9 +18,12 @@ router.get('/', async (req, res) => {
 	if (error) {
 		return res.status(500).json(generateResponse(500, error?.message || 'Something went wrong!'));
 	}
+
 	if (products) {
 		return res.status(200).json(generateResponse(200, 'Success', products));
 	}
+
+	return res.status(500).json(generateResponse(500, error?.message || 'Something went wrong!'));
 });
 
 module.exports = router;
