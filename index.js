@@ -74,26 +74,29 @@ app.use('/login', require('./src/routes/auth/login'));
 app.use('/signup', require('./src/routes/auth/signup'));
 app.use('/update-user', require('./src/routes/auth/update-user'));
 app.use('/get-user-details', require('./src/routes/auth/get-user-details'));
-
-// portal
 app.use('/refresh-token', require('./src/routes/auth/refresh-token'));
+
+//========== Portal ==============
 app.use('/list-bike', require('./src/routes/list-bike/list-bike'));
 app.use('/used-bike-list', require('./src/routes/list-bike/get-used-bike-list'));
 app.use('/used-bike-details', require('./src/routes/list-bike/get-used-bike-by-id'));
 app.use('/add-constant-bike', require('./src/routes/constant-data/add-constant-bikes'));
 app.use('/get-constant-bikes', require('./src/routes/constant-data/get-constant-bikes'));
 app.use('/upload/multiple', require('./src/routes/upload/upload-image'));
+
 app.use('/add-product-variant', require('./src/routes/admin/products/add-product-variant'));
 app.use('/get-products', require('./src/routes/products/get-products'));
+app.use('/get-product-variants', require('./src/routes/products/get-prod-variants'));
 
-// admin
+app.use('/create-order', require('./src/routes/orders/add-orders'));
+app.use('/update-order', require('./src/routes/orders/update-order'));
+
+//============= admin ==============
 app.use('/approve-listed-bike', require('./src/routes/list-bike/approve-listed-bike'));
 app.use('/add-product', require('./src/routes/admin/products/add-products'));
-app.use('/get-product-variants', require('./src/routes/products/get-prod-variants'));
 app.use('/update-product', require('./src/routes/admin/products/update-product'));
 app.use('/update-product-variant', require('./src/routes/admin/products/update-prod-variant'));
 
-// super admin
 app.use('/add-category', require('./src/routes/admin/categories/add-categories'));
 app.use('/update-category', require('./src/routes/admin/categories/update-categories'));
 app.use('/get-category', require('./src/routes/admin/categories/gell-categories'));
